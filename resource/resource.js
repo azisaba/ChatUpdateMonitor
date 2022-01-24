@@ -58,5 +58,9 @@ module.exports =  {
                 default : ""
             }
         }
+    },
+    "channelList.json" : {
+        pass : "./config/channelList.json",
+        keys : {}
     }
 }
