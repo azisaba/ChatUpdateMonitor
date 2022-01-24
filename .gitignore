@@ -1,0 +1,11 @@
+# Node modules
+/node_modules/
+
+#bots config
+/config/
+
+#log files
+/logs/
+
+#dev file
+start_ps.bat

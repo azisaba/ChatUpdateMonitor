@@ -1,0 +1,15 @@
+{
+  "name": "chat-update-monitor",
+  "version": "0.0.1",
+  "description": "Monitor the frequency of updates for a specific chat",
+  "main": "main.js",
+  "repository": "github",
+  "author": "huda0209",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "date-utils": "^1.2.21",
+    "discord.js": "^13.6.0",
+    "request": "^2.88.2"
+  }
+}
