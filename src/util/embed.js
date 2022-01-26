@@ -13,13 +13,31 @@ ran by node.js
 const Discord = require("discord.js");
 
 exports.info = (content)=>{
-    return new Discord.MessageEmbed()
+    return {embeds: [new Discord.MessageEmbed()
         .setDescription(content)
         .setColor('#06f919')
+    ]}
 }
 
 exports.error = (content)=>{
-    return new Discord.MessageEmbed()
+    return {embeds: [new Discord.MessageEmbed()
         .setDescription(content)
         .setColor('#f90906')
+    ]}
+}
+
+exports.infoWithTitle = (title, content)=>{
+    return {embeds: [new Discord.MessageEmbed()
+        .setTitle(title)
+        .setDescription(content)
+        .setColor('#06f919')
+    ]}
+}
+
+exports.errorWithTitle = (title, content)=>{
+    return {embeds: [new Discord.MessageEmbed()
+        .setTitle(title)
+        .setDescription(content)
+        .setColor('#f90906')
+    ]}
 }
