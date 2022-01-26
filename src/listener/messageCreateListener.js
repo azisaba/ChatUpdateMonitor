@@ -17,7 +17,7 @@ module.exports = (
       
       if(configManager.existIgnoreCategory(parentId)|| configManager.existIgnoreChannel(channelId)) return;
 
-      const createdAt = message.createdAt;
+      const createdAt = message.createdTimestamp;
       configManager.setCategoryLastUpdate(parentId, createdAt);
   })
 }
