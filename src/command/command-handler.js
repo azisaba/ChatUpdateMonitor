@@ -53,7 +53,10 @@ module.exports = (
 
 
 async function AdminCommandHandler([command, ...args],message,client){
-    if(args.length==0) return;
+    if(args.length==0){
+        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} <サブコマンド>\``))
+        return;
+    }
     switch(args[0].toLowerCase()){
         case "admin" :
             admin.adminManager([command, ...args],message,client);
@@ -66,7 +69,10 @@ async function AdminCommandHandler([command, ...args],message,client){
             process.exit(0);
 
         case "ignorechannel":
-            if(args.length<2) return;
+            if(args.length<2){
+                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} ignoreChannel <add | remove> [チャンネル...]\``))
+                return;
+            }
             switch(args[1].toLowerCase()){
                 case "add":
                     if(args.length<3){
@@ -150,7 +156,7 @@ async function AdminCommandHandler([command, ...args],message,client){
             break;
 
         default:
-            message.reply(`Unknown command.`);
+            message.reply(embedContent.errorWithTitle(`❓**コマンドがありません**❓`, `実行したコマンドは登録されていません。`));
             break;
       };
 }
