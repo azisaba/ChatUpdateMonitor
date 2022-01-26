@@ -33,7 +33,7 @@ exports.existIgnoreChannel = (key)=>{
 }
 
 exports.addIgnoreChannel = (key)=>{
-    if(chList.ignoreChannels.indexOf(key)==-1) return;
+    if(chList.ignoreChannels.indexOf(key)>-1) return;
     chList.ignoreChannels.push(key);
 }
 
