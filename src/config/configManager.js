@@ -50,7 +50,7 @@ exports.existIgnoreCategory = (key)=>{
 }
 
 exports.addIgnoreCategory = (key)=>{
-    if(chList.ignoreCategorys.indexOf(key)==-1) return;
+    if(chList.ignoreCategorys.indexOf(key)>-1) return;
     chList.ignoreCategorys.push(key);
     const index = monitorCategoryList.indexOf(key);
     if(index >- 1) monitorCategoryList.splice(index, 1);
