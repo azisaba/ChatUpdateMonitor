@@ -2,6 +2,6 @@
     "NAME" : "ChatUpdateMonitor",
     "MAIN_TOKEN" : "",
     "DIV_TOKEN" : "",
-    "PREFIX" : "/",
+    "PREFIX" : "-",
     "COMMAND" : "cum"
 }
