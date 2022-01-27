@@ -10,6 +10,7 @@
   "dependencies": {
     "date-utils": "^1.2.21",
     "discord.js": "^13.6.0",
+    "node-cron": "^3.0.0",
     "request": "^2.88.2"
   }
 }
