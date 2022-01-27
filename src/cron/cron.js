@@ -11,8 +11,8 @@ module.exports = async (client)=>{
             if(configManager.getCategoryLastUpdate(key) > (new Date()).getTime()) return;
             if(configManager.getNotifyStatus(key)) return;
             try{
-                (await client.channels.fetch("882261188413620274")).send(
-                    embedContent.infoWithTitle(`最後のアクションから${10}経ちました!`, `対象カテゴリ: ${(await client.channels.fetch(key)).name}\n最終アクション<t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F><t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`
+                (await client.channels.fetch(configManager.getGuildtData("sendSystemMessageChannelId"))).send(
+                    embedContent.infoWithTitle(`最後のアクションから${10}経ちました!`, `対象カテゴリ: ${(await client.channels.fetch(key)).name}\n最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F><t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`
                     ))
                 configManager.setNotifyStatus(key, true);
             }catch(e){ 
