@@ -101,7 +101,7 @@ async function AdminCommandHandler([command, ...args],message,client){
                 
         case "help" :
         case "h":
-            message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]});
+            message.channel.send(embedContent.infoWithTitle(`❔ヘルプ`, `下記リンクより確認してみてください。\nhttps://github.com/azisaba/ChatUpdateMonitor/blob/master/README.md`));
             break;
 
         default:
