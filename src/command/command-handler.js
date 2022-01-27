@@ -45,6 +45,7 @@ async function AdminCommandHandler([command, ...args],message,client){
     }
     switch(args[0].toLowerCase()){
         case "admin" :
+        case "a":
             adminCommandRunner([command, ...args],message,client);
             break;
     
@@ -54,18 +55,26 @@ async function AdminCommandHandler([command, ...args],message,client){
             process.exit(0);
 
         case "ignorechannel":
+        case "ignorech":
+        case "ignoch":
+        case "ig":
             ignoreChannelCommandRunner([command, ...args],message);
             break;
 
         case "ignorecategory":
+        case "ignorecate":
+        case "ignocate":
+        case "ic":
             ignoreCategoryCommandRunner([command, ...args],message);
             break;
 
         case "info":
+        case "i":
             infoCommandRunnner([command, ...args],message);
             break
 
         case "list" :
+        case "l":
             const CategoryList = configManager.getMonitorCategoryList().map(key=>{
                 const lastUpdateDate = (new Date(configManager.getCategoryLastUpdate(key)));
                 lastUpdateDate.setSeconds(lastUpdateDate.getSeconds()+configManager.getGuildtData("period"));
@@ -77,14 +86,21 @@ async function AdminCommandHandler([command, ...args],message,client){
             break;
 
         case "setperiod":
+        case "setp":
+        case "sp":
             setGuildDataCommandRunner.setPeriod([command, ...args], message);
             break;
 
         case "setsystemmessagechannel" :
+        case "setchannel":
+        case "setsmc":
+        case "ssmc":
+        case "sc":
             setGuildDataCommandRunner.setSystemMessageChannel([command, ...args], message);
             break;
                 
         case "help" :
+        case "h":
             message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]});
             break;
 
