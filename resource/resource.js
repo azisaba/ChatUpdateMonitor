@@ -47,11 +47,6 @@ module.exports =  {
     "guildData.json" : {
         pass : "./config/guildData.json",
         keys : {
-            GuildId : {
-                canEmpty : true,
-                replace : false,
-                default : ""
-            },
             Admin : {
                 canEmpty : true,
                 replace : false,
