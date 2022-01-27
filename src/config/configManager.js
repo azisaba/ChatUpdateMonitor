@@ -32,6 +32,10 @@ exports.existIgnoreChannel = (key)=>{
     return chList.ignoreChannels.indexOf(key)>-1 ? true : false;
 }
 
+exports.getIgnoreChannelList = ()=>{
+    return chList.ignoreChannels;
+}
+
 exports.addIgnoreChannel = (key)=>{
     if(chList.ignoreChannels.indexOf(key)>-1) return;
     chList.ignoreChannels.push(key);
@@ -47,6 +51,10 @@ exports.removeIgnoreChannel = (key)=>{
 
 exports.existIgnoreCategory = (key)=>{
     return chList.ignoreCategorys.indexOf(key)>-1 ? true : false;
+}
+
+exports.getIgnoreCategoryList = ()=>{
+    return chList.ignoreCategorys;
 }
 
 exports.addIgnoreCategory = (key)=>{
