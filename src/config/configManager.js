@@ -109,6 +109,13 @@ exports.removeCategory = (key)=>{
     monitorCategoryList.splice(index, 1);
 }
 
+
+exports.saveConfig = ()=>{
+    config.save("guildData.json", guildData);
+    config.save("channelList.json", chList);
+}
+
+
 exports.debug = ()=>{
     console.log(chList);
     console.log(monitorCategoryList);
