@@ -94,8 +94,10 @@ exports.getCategoryLastUpdate = (key)=>{
 
 exports.setCategoryLastUpdate = (key, value)=>{
     if(chList.ignoreCategorys.indexOf(key)>-1) throw Error("Included in the ignoreChannels list.");
-    chList.monitor[key].time = value;
-    chList.monitor[key].notify = false;
+    chList.monitor[key] = {
+        "time" : value,
+        "notify" : false
+    }
     if(monitorCategoryList.indexOf(key)==-1) monitorCategoryList.push(key);
     
 }
