@@ -45,7 +45,8 @@ require("./src/command/command-handler")(client);
 //start the bot
 client.on("ready", () => {
 	logger.info(`bot is ready! ver. ${Package.version} \n        login: {cyan}${client.user.tag}{reset}\n`);
-  	client.user.setActivity(`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} helpでヘルプを表示 ver. ${Package.version}`, { type: 'PLAYING' });
+	client.user.setActivity(`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} helpでヘルプを表示 ver. ${Package.version}`, { type: 'PLAYING' });
+	require("./src/cron/cron")(client);
 });
 
 
