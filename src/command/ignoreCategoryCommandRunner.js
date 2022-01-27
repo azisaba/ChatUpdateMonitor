@@ -1,5 +1,15 @@
+/*
 
+created by huda0209
+ChatUpdateMonitor for discord bot 
 
+ran by node.js
+
+2022-1-28
+
+*/
+
+"use strict"
 
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
