@@ -18,6 +18,7 @@ const embedContent = require("../util/embed");
 const ignoreChannelCommandRunner = require("./ignoreChannelCommandRunner");
 const ignoreCategoryCommandRunner = require("./ignoreCategoryCommandRunner");
 const infoCommandRunnner = require("./infoCommandRunnner");
+const setGuildDataCommandRunner = require("./setGuildDataCommandRunner");
 
 
 /*
@@ -96,49 +97,12 @@ async function AdminCommandHandler([command, ...args],message,client){
             break;
 
         case "setperiod":
-            if(args.length<2){
-                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
-                return;
-            }
-            if(!Number(args[1])){
-                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `監視期間は数値で指定してください。`))
-                //log.error(`The process was aborted because the argument was not a number. argment:${args[3]} ProcessCount:${processCount}`);
-                return;
-            }
-            configManager.setGuildtData("period", parseInt(args[1]));
-
-            const timeD = Math.floor(args[1] / (24 * 60 * 60));
-            const timeH = Math.floor(args[1] % (24 * 60 * 60) / (60 * 60));
-            const timeM = Math.floor(args[1] % (24 * 60 * 60) % (60 * 60) / 60);
-            const timeS = args[1] % (24 * 60 * 60) % (60 * 60) % 60;
-            const timeString = `${timeD>0?`${timeD}日` : ""}${timeH>0?`${timeH}時間` : ""}${timeM>0?`${timeM}分` : ""}${timeS>0?`${timeS}秒` : ""}`;
-            message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `監視期間を${timeString}(${args[1]}秒)に設定しました。`));
+            setGuildDataCommandRunner.setPeriod([command, ...args], message)
             break;
 
-            case "setsystemmessagechannel" :
-                if(args.length<2){
-                    message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
-                    return;
-                }
-                const channelId = args[1].replace(/</g, "").replace(/>/g, "").replace(/#/g, "");
-                try{
-                    const channel = message.guild.channels.cache.get(channelId);
-                    if(!channel){
-                        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `チャンネルが取得できませんでした。`));
-                        return;
-                    }
-                    if(channel.type != "GUILD_TEXT"){
-                        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `チャンネルにはテキストチャンネルを指定してください。`));
-                        return;
-                    }
-                }catch(e){
-                    message.channel.send(embedContent.errorWithTitle(`💥エラー発生💥`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
-                    return;
-                }
-
-                configManager.setGuildtData("sendSystemMessageChannelId", channelId);
-                message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `システムメッセージ送信先チャンネルを<#${channelId}>に設定しました。`));
-                break;
+        case "setsystemmessagechannel" :
+            setGuildDataCommandRunner.setSystemMessageChannel([command, ...args], message)
+            break;
                 
         case "help" :
             message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]})
