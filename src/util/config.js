@@ -44,9 +44,10 @@ function exist(createMode){
         throw e;
     }
 
-    if(!fs.existsSync("./config")) fs.mkdirSync("./config");
-    log.info(`Succeed to create "{red}config directory{reset}".`)
-
+    if(!fs.existsSync("./config")){
+        fs.mkdirSync("./config");
+        log.info(`Succeed to create "{red}config directory{reset}".`);
+    }
     let result = false;
 
     for(const key in resource){
