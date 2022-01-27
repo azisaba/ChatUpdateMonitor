@@ -84,7 +84,7 @@ exports.getNotifyStatus = (key)=>{
 
 exports.setNotifyStatus = (key, value)=>{
     if(monitorCategoryList.indexOf(key)==-1) throw Error("The element does not exist.");
-    chList.monitor[key].notify == value;
+    chList.monitor[key].notify = value;
 }
 
 exports.getCategoryLastUpdate = (key)=>{
