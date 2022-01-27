@@ -76,14 +76,26 @@ exports.getMonitorCategoryList  = ()=>{
     return monitorCategoryList;
 }
 
+//true:Alleady notify
+exports.getNotifyStatus = (key)=>{
+    if(monitorCategoryList.indexOf(key)==-1) throw Error("The element does not exist.");
+    return chList.monitor[key].notify;
+}
+
+exports.setNotifyStatus = (key, value)=>{
+    if(monitorCategoryList.indexOf(key)==-1) throw Error("The element does not exist.");
+    chList.monitor[key].notify == value;
+}
+
 exports.getCategoryLastUpdate = (key)=>{
     if(monitorCategoryList.indexOf(key)==-1) return undefined;
-    return chList.monitor[key];
+    return chList.monitor[key].time;
 }
 
 exports.setCategoryLastUpdate = (key, value)=>{
     if(chList.ignoreCategorys.indexOf(key)>-1) throw Error("Included in the ignoreChannels list.");
-    chList.monitor[key] = value;
+    chList.monitor[key].time = value;
+    chList.monitor[key].notify = false;
     if(monitorCategoryList.indexOf(key)==-1) monitorCategoryList.push(key);
     
 }
