@@ -12,7 +12,7 @@ ran by node.js
 "use strict"
 
 const logger = require('../util/logger');
-const admin = require('./admin/admin.js');
+const adminCommandRunner = require('./adminCommandRunner.js');
 const embedContent = require("../util/embed");
 
 const ignoreChannelCommandRunner = require("./ignoreChannelCommandRunner");
@@ -64,7 +64,7 @@ async function AdminCommandHandler([command, ...args],message,client){
     }
     switch(args[0].toLowerCase()){
         case "admin" :
-            admin.adminManager([command, ...args],message,client);
+            adminCommandRunner([command, ...args],message,client);
             break;
     
         case "stop" :
