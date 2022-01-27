@@ -17,7 +17,7 @@ const embedContent = require("../util/embed");
 
 const ignoreChannelCommandRunner = require("./ignoreChannelCommandRunner");
 const ignoreCategoryCommandRunner = require("./ignoreCategoryCommandRunner");
-const ignoreListCommandRunner = require("./ignoreListCommandRunner");
+const infoCommandRunnner = require("./infoCommandRunnner");
 
 
 /*
@@ -80,8 +80,8 @@ async function AdminCommandHandler([command, ...args],message,client){
             ignoreCategoryCommandRunner([command, ...args],message);
             break;
 
-        case "ignorelist":
-            ignoreListCommandRunner([command, ...args],message);
+        case "info":
+            infoCommandRunnner([command, ...args],message);
             break
 
         case "list" :
