@@ -64,6 +64,9 @@ exports.removeIgnoreCategory = (key)=>{
 }
 
 
+exports.getMonitorCategoryList  = ()=>{
+    return monitorCategoryList;
+}
 
 exports.getCategoryLastUpdate = (key)=>{
     if(monitorCategoryList.indexOf(key)==-1) return undefined;
