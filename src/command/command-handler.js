@@ -84,6 +84,17 @@ async function AdminCommandHandler([command, ...args],message,client){
             ignoreListCommandRunner([command, ...args],message);
             break
 
+        case "list" :
+            const CategoryList = configManager.getMonitorCategoryList().map(key=>{
+                const lastUpdateDate = (new Date(configManager.getCategoryLastUpdate(key)));
+                lastUpdateDate.setSeconds(lastUpdateDate.getSeconds()+configManager.getGuildtData("period"));
+    
+                const category = message.guild.channels.cache.get(key);
+                return `${lastUpdateDate.getTime() > (new Date()).getTime() ? "✅" : "‼"} **${category.name}**   -   最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`;
+            })
+            message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`))
+            break;
+
         case "help" :
             message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]})
             break;
