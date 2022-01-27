@@ -56,6 +56,16 @@ module.exports =  {
                 canEmpty : true,
                 replace : false,
                 default : ""
+            },
+	        sendSystemMessageChannelId : {
+                canEmpty : false,
+                replace : false,
+                default : ""
+            },
+	        period : {
+                canEmpty : false,
+                replace : false,
+                default : ""
             }
         }
     },

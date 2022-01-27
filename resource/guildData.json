@@ -1,4 +1,6 @@
 {
 	"GuildId" : "",
-	"Admin" : []
+	"Admin" : [],
+	"sendSystemMessageChannelId" : "",
+	"period" : ""
 }
