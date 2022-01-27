@@ -13,21 +13,18 @@ function loadConfig(configName){
     let resource = require("../../resource/resource");
     if(!resource[configName]){
         log.error(`can't find that file({red}${configName}{reset}).`);
-        return;
+        throw Error(`can't find that file({red}${configName}{reset}).`);
     }
-    let result = true;
 
     const data = JSON.parse(fs.readFileSync(resource[configName].pass,"utf-8"));
 
-    const NoKeyList = [];
     for(const key in resource[configName].keys){
             if(!resource[configName].keys[key].canEmpty) continue;
             if(Object.hasOwnProperty.call(data, key)) continue;
             log.error(`Don't have a property "{red}${key}{reset}" in {green}${configName}{reset}.`);
-            result = false;
+            throw Error(`Don't have a property "{red}${key}{reset}" in {green}${configName}{reset}.`);
         
     }
-    if(!result) process.exit();
 
     for(const key in resource[configName].keys) {
         if(Object.hasOwnProperty.call(data, key) && data[key]) continue;
@@ -44,9 +41,9 @@ function exist(createMode){
         resource = require("../../resource/resource");
     }catch(e){
         log.error(e);
-        return false;
+        throw e;
     }
-    
+
     if(!fs.existsSync("./config")) fs.mkdirSync("./config");
     log.info(`Succeed to create "{red}config directory{reset}".`)
 
