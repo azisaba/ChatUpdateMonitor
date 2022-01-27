@@ -115,6 +115,31 @@ async function AdminCommandHandler([command, ...args],message,client){
             message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `監視期間を${timeString}(${args[1]}秒)に設定しました。`));
             break;
 
+            case "setsystemmessagechannel" :
+                if(args.length<2){
+                    message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
+                    return;
+                }
+                const channelId = args[1].replace(/</g, "").replace(/>/g, "").replace(/#/g, "");
+                try{
+                    const channel = message.guild.channels.cache.get(channelId);
+                    if(!channel){
+                        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `チャンネルが取得できませんでした。`));
+                        return;
+                    }
+                    if(channel.type != "GUILD_TEXT"){
+                        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `チャンネルにはテキストチャンネルを指定してください。`));
+                        return;
+                    }
+                }catch(e){
+                    message.channel.send(embedContent.errorWithTitle(`💥エラー発生💥`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
+                    return;
+                }
+
+                configManager.setGuildtData("sendSystemMessageChannelId", channelId);
+                message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `システムメッセージ送信先チャンネルを<#${channelId}>に設定しました。`));
+                break;
+                
         case "help" :
             message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]})
             break;
