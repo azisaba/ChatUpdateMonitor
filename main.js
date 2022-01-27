@@ -29,6 +29,7 @@ const Package = require("./package.json");
 
 logger.info(`This service is standing now...`);
 process.on("exit", ()=>{
+	configManager.saveConfig();
 	client.destroy();
     logger.info(`service end.`);
     logger.hasLastLog();
