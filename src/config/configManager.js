@@ -84,6 +84,10 @@ exports.removeIgnoreCategory = (key)=>{
 }
 
 
+exports.existMonitorCategory = (key)=>{
+    return monitorCategoryList.indexOf(key)>-1 ? true : false;
+}
+
 exports.getMonitorCategoryList  = ()=>{
     return monitorCategoryList;
 }
