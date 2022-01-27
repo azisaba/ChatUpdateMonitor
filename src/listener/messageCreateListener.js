@@ -1,15 +1,19 @@
 /*
-const discord = require("discord.js")
-const client = new discord.Client({intents: ["GUILDS", "GUILD_MESSAGES","DIRECT_MESSAGES"], partials: ["USER", "MESSAGE", "CHANNEL"]});
-//*/
+
+created by huda0209
+ChatUpdateMonitor for discord bot 
+
+ran by node.js
+
+2022-1-28
+
+*/
+
+"use strict"
 
 const configManager = require("../config/configManager");
 
-module.exports = (
-    //*
-    client
-    //*/
-    )=>{
+module.exports = (client)=>{
       client.on("messageCreate", async message => {
       
       const parentId = message.channel.parentId;
@@ -25,4 +29,3 @@ module.exports = (
       configManager.setCategoryLastUpdate(parentId, createdAt);
   })
 }
-

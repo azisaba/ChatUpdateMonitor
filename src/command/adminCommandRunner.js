@@ -20,14 +20,14 @@ module.exports = async([command, ...args],message) => {
     switch(args[1].toLowerCase()){
         case "add" :
             if(args.length<2){
-                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} admin <add | delete | list> [user]\``));
+                message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} admin <add | delete | list> [user]\``));
                 return;
             }
             if(configManager.getGuildtData("Admin").indexOf(message.mentions.members.first().id)>=0){
-                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `ユーザー<@${message.mentions.members.first().id}>は追加済みです。`));
+                message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `ユーザー<@${message.mentions.members.first().id}>は追加済みです。`));
                 return;
             }
-            configManager.getGuildtData("Admin").push(message.mentions.members.first().id)
+            configManager.getGuildtData("Admin").push(message.mentions.members.first().id);
             logger.info(`Add admin {green}${message.mentions.members.first().user.tag}`);
             message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `ユーザー<@${message.mentions.members.first().id}>をAdminに追加しました。`));
             break;
@@ -35,11 +35,11 @@ module.exports = async([command, ...args],message) => {
         case "delete" :
         case "del" :
             if(args.length<2){
-                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} admin <add | delete | list> [user]\``));
+                message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} admin <add | delete | list> [user]\``));
                 return;
             }
             if(configManager.getGuildtData("Admin").indexOf(message.mentions.members.first().id)==-1){
-                message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `ユーザー<@${message.mentions.members.first().id}>はAdminではないため、削除できませんでした。`));
+                message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `ユーザー<@${message.mentions.members.first().id}>はAdminではないため、削除できませんでした。`));
                 return;               
             }
             let adminList = configManager.getGuildtData("Admin");
@@ -54,11 +54,11 @@ module.exports = async([command, ...args],message) => {
             const adminLinkList = configManager.getGuildtData("Admin").map(key=>{
                 return `<@${key}>`;
             });
-            message.reply(embedContent.infoWithTitle(`Adminリスト`, `${ adminLinkList.length>0? adminLinkList.join("\n") : "ユーザーはいません。"}`))
+            message.reply(embedContent.infoWithTitle(`Adminリスト`, `${ adminLinkList.length>0? adminLinkList.join("\n") : "ユーザーはいません。"}`));
             break;
 
         default :
-            message.reply(embedContent.errorWithTitle(`❓**コマンドがありません**❓`, `実行したコマンドは登録されていません。`));
+            message.reply(embedContent.errorWithTitle(`❓コマンドがありません`, `実行したコマンドは登録されていません。`));
             break;
     };
 };

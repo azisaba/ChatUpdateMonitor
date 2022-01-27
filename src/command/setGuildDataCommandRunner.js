@@ -1,4 +1,15 @@
+/*
 
+created by huda0209
+ChatUpdateMonitor for discord bot 
+
+ran by node.js
+
+2022-1-28
+
+*/
+
+"use strict"
 
 
 const configManager = require("../config/configManager");
@@ -6,11 +17,11 @@ const embedContent = require("../util/embed");
 
 exports.setPeriod = ([command, ...args], message)=>{
     if(args.length<2){
-        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
+        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
         return;
     }
     if(!Number(args[1])){
-        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `監視期間は数値で指定してください。`))
+        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `監視期間は数値で指定してください。`));
         //log.error(`The process was aborted because the argument was not a number. argment:${args[3]} ProcessCount:${processCount}`);
         return;
     }
@@ -27,22 +38,22 @@ exports.setPeriod = ([command, ...args], message)=>{
 
 exports.setSystemMessageChannel = ([command, ...args], message)=>{
     if(args.length<2){
-        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
+        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``));
         return;
     }
     const channelId = args[1].replace(/</g, "").replace(/>/g, "").replace(/#/g, "");
     try{
         const channel = message.guild.channels.cache.get(channelId);
         if(!channel){
-            message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `チャンネルが取得できませんでした。`));
+            message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `チャンネルが取得できませんでした。`));
             return;
         }
         if(channel.type != "GUILD_TEXT"){
-            message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `チャンネルにはテキストチャンネルを指定してください。`));
+            message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `チャンネルにはテキストチャンネルを指定してください。`));
             return;
         }
     }catch(e){
-        message.channel.send(embedContent.errorWithTitle(`💥エラー発生💥`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
+        message.channel.send(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
         return;
     }
 

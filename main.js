@@ -7,7 +7,7 @@ main.js
  
 ran by node.js
 
-2022-1-26
+2022-1-28
 
 */
 'use strict'
@@ -17,15 +17,17 @@ const fs = require('fs');
 const discord = require("discord.js");
 require('date-utils');
 
-//module
-//const commandHandler = require('./src/command/command-handler.js');
-
 //other 
-const client = new discord.Client({intents: ["GUILDS", "GUILD_MESSAGES","DIRECT_MESSAGES"], partials: ["USER", "MESSAGE", "CHANNEL"]});
+const client = new discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"], partials: ["USER", "MESSAGE", "CHANNEL"]});
 const logger = require('./src/util/logFile');
-const config = require('./src/util/config');
 const configManager = require("./src/config/configManager");
 const Package = require("./package.json");
+
+//listener register
+require("./src/listener/messageCreateListener")(client);
+require("./src/command/command-handler")(client);
+require("./src/cron/cron")(client);
+
 
 logger.info(`This service is standing now...`);
 process.on("exit", ()=>{
@@ -36,18 +38,14 @@ process.on("exit", ()=>{
     console.log("Exitting...");
 });
 process.on("SIGINT", ()=>{
-    process.exit(0);
+	process.exit(0);
 });
 
-
-require("./src/listener/messageCreateListener")(client);
-require("./src/command/command-handler")(client);
 
 //start the bot
 client.on("ready", () => {
 	logger.info(`bot is ready! ver. ${Package.version} \n        login: {cyan}${client.user.tag}{reset}\n`);
 	client.user.setActivity(`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} helpでヘルプを表示 ver. ${Package.version}`, { type: 'PLAYING' });
-	require("./src/cron/cron")(client);
 });
 
 

@@ -1,3 +1,15 @@
+/*
+
+created by huda0209
+ChatUpdateMonitor for discord bot 
+
+ran by node.js
+
+2022-1-28
+
+*/
+
+"use strict"
 
 const config = require("../util/config");
 
@@ -113,10 +125,4 @@ exports.removeCategory = (key)=>{
 exports.saveConfig = ()=>{
     config.save("guildData.json", guildData);
     config.save("channelList.json", chList);
-}
-
-
-exports.debug = ()=>{
-    console.log(chList);
-    console.log(monitorCategoryList);
 }

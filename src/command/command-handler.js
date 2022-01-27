@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-27
+2022-1-28
 
 */
 
@@ -21,28 +21,10 @@ const infoCommandRunnner = require("./infoCommandRunnner");
 const setGuildDataCommandRunner = require("./setGuildDataCommandRunner");
 
 
-/*
-const discord = require("discord.js")
-const client = new discord.Client({intents: ["GUILDS", "GUILD_MESSAGES","DIRECT_MESSAGES"], partials: ["USER", "MESSAGE", "CHANNEL"]});
-//*/
-
 const configManager = require("../config/configManager");
 
-module.exports = (
-    //*
-    client
-    //*/
-    )=>{
-      client.on("messageCreate", async message => {
-
-        /*let content = message.content.replace(/ /g, "");
-        content = content.replace(/</g, "");
-        content = content.replace(/>/g, "");
-        content = content.replace(/　/g, "");
-        console.log(content)
-        console.log(content.split('#'));
-*/
-        //console.log(message.guild.channels.cache)
+module.exports = (client)=>{
+    client.on("messageCreate", async message => {
         if(!message.content.startsWith(configManager.getBotData("PREFIX"))) return;
 
         const [command, ...args] = message.content.slice(configManager.getBotData("PREFIX").length).split(' ');   
@@ -52,14 +34,13 @@ module.exports = (
                 AdminCommandHandler([command, ...args],message,client);
                 break;
         };
-        
-  })
+    })
 }
 
 
 async function AdminCommandHandler([command, ...args],message,client){
     if(args.length==0){
-        message.reply(embedContent.errorWithTitle(`❌**コマンド実行失敗**❌`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} <サブコマンド>\``))
+        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} <サブコマンド>\``));
         return;
     }
     switch(args[0].toLowerCase()){
@@ -70,7 +51,6 @@ async function AdminCommandHandler([command, ...args],message,client){
         case "stop" :
             logger.info(`server was stoped by {cyan}${message.author.tag}`);
             await message.delete();
-            client.destroy();
             process.exit(0);
 
         case "ignorechannel":
@@ -93,27 +73,23 @@ async function AdminCommandHandler([command, ...args],message,client){
                 const category = message.guild.channels.cache.get(key);
                 return `${lastUpdateDate.getTime() > (new Date()).getTime() ? "✅" : "‼"} **${category.name}**   -   最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`;
             })
-            message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`))
+            message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`));
             break;
 
         case "setperiod":
-            setGuildDataCommandRunner.setPeriod([command, ...args], message)
+            setGuildDataCommandRunner.setPeriod([command, ...args], message);
             break;
 
         case "setsystemmessagechannel" :
-            setGuildDataCommandRunner.setSystemMessageChannel([command, ...args], message)
+            setGuildDataCommandRunner.setSystemMessageChannel([command, ...args], message);
             break;
                 
         case "help" :
-            message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]})
-            break;
-
-        case "debug" :
-            configManager.debug();
+            message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]});
             break;
 
         default:
-            message.reply(embedContent.errorWithTitle(`❓**コマンドがありません**❓`, `実行したコマンドは登録されていません。`));
+            message.reply(embedContent.errorWithTitle(`❓コマンドがありません`, `実行したコマンドは登録されていません。`));
             break;
       };
 }
