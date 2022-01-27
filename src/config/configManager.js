@@ -54,6 +54,7 @@ exports.addIgnoreCategory = (key)=>{
     chList.ignoreCategorys.push(key);
     const index = monitorCategoryList.indexOf(key);
     if(index >- 1) monitorCategoryList.splice(index, 1);
+    delete chList.monitor[key];
 }
 
 exports.removeIgnoreCategory = (key)=>{
