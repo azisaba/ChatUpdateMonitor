@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-26
+2022-1-27
 
 */
 
@@ -17,6 +17,7 @@ const embedContent = require("../util/embed");
 
 const ignoreChannelCommandRunner = require("./ignoreChannelCommandRunner");
 const ignoreCategoryCommandRunner = require("./ignoreCategoryCommandRunner");
+const ignoreListCommandRunner = require("./ignoreListCommandRunner");
 
 
 /*
@@ -40,7 +41,7 @@ module.exports = (
         console.log(content)
         console.log(content.split('#'));
 */
-        console.log(message.guild.channels.cache)
+        //console.log(message.guild.channels.cache)
         if(!message.content.startsWith(configManager.getBotData("PREFIX"))) return;
 
         const [command, ...args] = message.content.slice(configManager.getBotData("PREFIX").length).split(' ');   
@@ -78,6 +79,10 @@ async function AdminCommandHandler([command, ...args],message,client){
         case "ignorecategory":
             ignoreCategoryCommandRunner([command, ...args],message);
             break;
+
+        case "ignorelist":
+            ignoreListCommandRunner([command, ...args],message);
+            break
 
         case "help" :
             message.channel.send({embeds:[embedContent.info(`**移行するメッセージのあるチャンネル(若しくはスレッド)で下記のコマンドを入力**\n・チャンネルorスレッド → チャンネル\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のチャンネルid> <移行するメッセージ数>\`\n\n・チャンネルorスレッド → スレッド\n\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} run <移行する最初のメッセージのid> <移行先のスレッドがあるチャンネルid>:<移行先のスレッドid> <移行するメッセージ数>\``)]})
