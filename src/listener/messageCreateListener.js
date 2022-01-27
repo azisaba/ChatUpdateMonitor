@@ -15,7 +15,11 @@ module.exports = (
       const parentId = message.channel.parentId;
       const channelId = message.channelId;
       
-      if(configManager.existIgnoreCategory(parentId)|| configManager.existIgnoreChannel(channelId) || message.author.bot) return;
+      if(configManager.existIgnoreCategory(parentId)
+          || configManager.existIgnoreChannel(channelId)
+          || message.author.bot
+          || message.content.startsWith(configManager.getBotData("PREFIX"))
+        ) return;
 
       const createdAt = message.createdTimestamp;
       configManager.setCategoryLastUpdate(parentId, createdAt);
