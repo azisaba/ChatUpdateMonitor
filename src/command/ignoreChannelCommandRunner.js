@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-28
+2022-1-29
 
 */
 
@@ -27,6 +27,10 @@ module.exports = ([command, ...args], message)=>{
                     message.channel.send(embedContent.errorWithTitle(`❌追加失敗`, `チャンネル<#${message.channel.id}>は既に除外リストに追加されています。`))
                     return;
                 }
+                if(message.channel.type != "GUILD_TEXT"){
+                    message.channel.send(embedContent.errorWithTitle(`❌追加失敗`, `<#${message.channel.id}>はチャンネルではありません。`));
+                    return;
+                }
                 configManager.addIgnoreChannel(message.channelId);
                 message.channel.send(embedContent.infoWithTitle(`🏷**追加成功`, `チャンネル<#${message.channel.id}>は除外リストに追加されました。`))
             }else {
@@ -39,6 +43,10 @@ module.exports = ([command, ...args], message)=>{
                 channels.forEach(key=>{
                     try{
                         const channel = message.guild.channels.cache.get(key);
+                        if(channel.type != "GUILD_TEXT"){
+                            message.channel.send(embedContent.errorWithTitle(`❌追加失敗`, `<#${message.channel.id}>はチャンネルではありません。`));
+                            return;
+                        }
                         if(configManager.existIgnoreChannel(channel.id)){
                             failedToAddCh.push(`<${channel.id}>`);
                             return;
@@ -62,6 +70,10 @@ module.exports = ([command, ...args], message)=>{
                     message.channel.send(embedContent.errorWithTitle(`❌削除失敗`, `チャンネル<#${message.channel.id}>は除外リストにないため、削除できませんでした。`));
                     return;
                 }
+                if(message.channel.type != "GUILD_TEXT"){
+                    message.channel.send(embedContent.errorWithTitle(`❌削除失敗`, `<#${message.channel.id}>はチャンネルではありません。`));
+                    return;
+                }
                 configManager.removeIgnoreChannel(message.channelId);
                 message.channel.send(embedContent.infoWithTitle(`🗑削除成功`, `チャンネル<#${message.channel.id}>は除外リストから削除されました。`));
             }else {
@@ -74,6 +86,10 @@ module.exports = ([command, ...args], message)=>{
                 channels.forEach(key=>{
                     try{
                         const channel = message.guild.channels.cache.get(key);
+                        if(channel.type != "GUILD_TEXT"){
+                            message.channel.send(embedContent.errorWithTitle(`❌削除失敗`, `<#${message.channel.id}>はチャンネルではありません。`));
+                            return;
+                        }
                         if(!configManager.existIgnoreChannel(channel.id)){
                             failedToRemoveCh.push(`<#${channel.id}>`);
                             return;
