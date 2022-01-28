@@ -25,6 +25,7 @@ const Package = require("./package.json");
 
 //listener register
 require("./src/listener/messageCreateListener")(client);
+require("./src/listener/ownMentionListener")(client);
 require("./src/command/command-handler")(client);
 require("./src/cron/cron")(client);
 
