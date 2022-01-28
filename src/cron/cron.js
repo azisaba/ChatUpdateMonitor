@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-28
+2022-1-29
 
 */
 
@@ -41,4 +41,8 @@ module.exports = async (client)=>{
             }
         })
     }, 1000)
+
+    setInterval( ()=>{
+        configManager.saveConfig();
+    }, 300000)
 }
