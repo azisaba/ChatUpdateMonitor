@@ -30,7 +30,7 @@ module.exports = (client)=>{
         const [command, ...args] = message.content.slice(configManager.getBotData("PREFIX").length).split(' ');   
         switch(command.toLowerCase()){
             case configManager.getBotData("COMMAND") :
-                if(!(message.author.id == message.guild.ownerId || guildData.Admin.indexOf(message.author.id)>-1)) break;
+                if(!(message.author.id == message.guild.ownerId || configManager.getGuildtData("Admin").indexOf(message.author.id)>-1)) break;
                 AdminCommandHandler([command, ...args],message,client);
                 break;
         };
