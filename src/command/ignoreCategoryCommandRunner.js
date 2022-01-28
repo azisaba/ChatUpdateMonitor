@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-28
+2022-1-29
 
 */
 
@@ -26,6 +26,10 @@ module.exports = ([command, ...args], message)=>{
                     message.channel.send(embedContent.errorWithTitle(`❌追加失敗`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は既に除外リストに追加されています。`));
                     return;
                 }
+                if(channel.type!="GUILD_CATEGORY"){
+                    message.channel.send(embedContent.errorWithTitle(`❌追加失敗`, `「${message.guild.channels.cache.get(message.channel.parentId).name}」はカテゴリではありません。`));
+                    return;
+                }
                 configManager.addIgnoreCategory(message.channel.parentId);
                 message.channel.send(embedContent.infoWithTitle(`🏷追加成功`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストに追加されました。`));
             }else {
@@ -37,7 +41,10 @@ module.exports = ([command, ...args], message)=>{
                 channels.forEach(key=>{
                     try{
                         const channel = message.guild.channels.cache.get(key);
-                        if(channel.type!="GUILD_CATEGORY") throw Error("It's not a category channel.");
+                        if(channel.type!="GUILD_CATEGORY"){
+                            message.channel.send(embedContent.errorWithTitle(`❌追加失敗`, `${key}はカテゴリではありません。`));
+                            return;
+                        }
                         if(configManager.existIgnoreCategory(channel.id)){
                             failedToAddCategory.push(channel.name);
                             return;
@@ -61,6 +68,10 @@ module.exports = ([command, ...args], message)=>{
                     message.channel.send(embedContent.errorWithTitle(`❌削除失敗`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストにないため、削除できませんでした。`));
                     return;
                 }
+                if(channel.type!="GUILD_CATEGORY"){
+                    message.channel.send(embedContent.errorWithTitle(`❌削除失敗`, `「${message.guild.channels.cache.get(message.channel.parentId).name}」はカテゴリではありません。`));
+                    return;
+                }
                 configManager.removeIgnoreCategory(message.channel.parentId);
                 message.channel.send(embedContent.infoWithTitle(`🗑削除成功`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストから削除されました。`));
             }else {
@@ -72,7 +83,10 @@ module.exports = ([command, ...args], message)=>{
                 channels.forEach(key=>{
                     try{
                         const channel = message.guild.channels.cache.get(key);
-                        if(channel.type!="GUILD_CATEGORY") throw Error("It's not a category channel.");
+                        if(channel.type!="GUILD_CATEGORY"){
+                            message.channel.send(embedContent.errorWithTitle(`❌削除失敗`, `${key}はカテゴリではありません。`));
+                            return;
+                        }
                         if(!configManager.existIgnoreCategory(channel.id)){
                             failedToRemoveCategory.push(channel.name);
                             return;
