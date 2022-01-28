@@ -57,14 +57,14 @@ async function AdminCommandHandler([command, ...args],message,client){
         case "ignorechannel":
         case "ignorech":
         case "ignoch":
-        case "ig":
+        case "ich":
             ignoreChannelCommandRunner([command, ...args],message);
             break;
 
         case "ignorecategory":
         case "ignorecate":
         case "ignocate":
-        case "ic":
+        case "ica":
             ignoreCategoryCommandRunner([command, ...args],message);
             break;
 
