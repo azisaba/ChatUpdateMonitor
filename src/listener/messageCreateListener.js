@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-28
+2022-1-29
 
 */
 
@@ -16,12 +16,16 @@ const embedContent = require("../util/embed");
 
 module.exports = (client)=>{
     client.on("messageCreate", async message => {
+    const parentId = message.channel.parent.type == "GUILD_CATEGORY" ? 
+        message.channel.parent.id : ( message.guild.channels.cache.get(message.channel.parent.id).parent.type == "GUILD_CATEGORY" ? message.guild.channels.cache.get(message.channel.parent.id).parent.id : null );
+    const channelId = message.channel.type == "GUILD_TEXT" ? 
+        message.channelId : ( message.guild.channels.cache.get(message.channel.parent.id).type == "GUILD_TEXT" ? message.guild.channels.cache.get(message.channel.parent.id).id : null );
     
-    const parentId = message.channel.parentId;
-    const channelId = message.channelId;
-    
-    if(configManager.existIgnoreCategory(parentId)
+    if(    parentId == null
+        || channelId == null
+        || configManager.existIgnoreCategory(parentId)
         || configManager.existIgnoreChannel(channelId)
+        || message.system
         || message.author.bot
         || message.content.startsWith(configManager.getBotData("PREFIX"))
       ) return;
