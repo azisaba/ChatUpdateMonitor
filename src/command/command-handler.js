@@ -101,7 +101,7 @@ async function AdminCommandHandler([command, ...args],message,client){
                 
         case "help" :
         case "h":
-            message.channel.send(embedContent.infoWithTitle(`❔ヘルプ`, `下記リンクより確認してみてください。\nhttps://github.com/azisaba/ChatUpdateMonitor/blob/master/README.md`));
+            message.reply(embedContent.infoWithTitle(`❔ヘルプ`, `下記リンクより確認してみてください。\nhttps://github.com/azisaba/ChatUpdateMonitor/blob/master/README.md`));
             break;
 
         default:
