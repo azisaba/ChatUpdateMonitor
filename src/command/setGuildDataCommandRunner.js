@@ -14,12 +14,14 @@ ran by node.js
 
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
+const lineNumber = require("./src/util/LineNumber");
 
 exports.setPeriod = ([command, ...args], message)=>{
     if(args.length<2){
         message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``))
             .catch(e=>{
                 console.log(e);
+                console.log(`at ${__filename}:${lineNumber()-3}`);
             });
         return;
     }
@@ -27,6 +29,7 @@ exports.setPeriod = ([command, ...args], message)=>{
         message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `監視期間は数値で指定してください。`))
             .catch(e=>{
                 console.log(e);
+                console.log(`at ${__filename}:${lineNumber()-3}`);
             });
         //log.error(`The process was aborted because the argument was not a number. argment:${args[3]} ProcessCount:${processCount}`);
         return;
@@ -41,6 +44,7 @@ exports.setPeriod = ([command, ...args], message)=>{
     message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `監視期間を${timeString}(${args[1]}秒)に設定しました。`))
         .catch(e=>{
             console.log(e);
+            console.log(`at ${__filename}:${lineNumber()-3}`);
         });
 }
 
@@ -50,6 +54,7 @@ exports.setSystemMessageChannel = ([command, ...args], message)=>{
         message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} setPeriod [seconds]\``))
             .catch(e=>{
                 console.log(e);
+                console.log(`at ${__filename}:${lineNumber()-3}`);
             });
         return;
     }
@@ -68,6 +73,7 @@ exports.setSystemMessageChannel = ([command, ...args], message)=>{
         message.channel.send(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``))
             .catch(er=>{
                 console.log(er);
+                console.log(`at ${__filename}:${lineNumber()-14}`);
             });
         return;
     }
@@ -76,5 +82,6 @@ exports.setSystemMessageChannel = ([command, ...args], message)=>{
     message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `システムメッセージ送信先チャンネルを<#${channelId}>に設定しました。`))
         .catch(e=>{
             console.log(e);
+            console.log(`at ${__filename}:${lineNumber()-3}`);
         });
 }

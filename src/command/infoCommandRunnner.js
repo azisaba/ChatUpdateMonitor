@@ -13,6 +13,7 @@ ran by node.js
 
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
+const lineNumber = require("./src/util/LineNumber");
 
 module.exports = ([command, ...args], message)=>{
 
@@ -52,5 +53,6 @@ module.exports = ([command, ...args], message)=>{
     message.reply(embedContent.infoWithTitle(`📚インフォメーション`, [timeString, noticeChannelString, ignoreGuildChannelString].join("\n\n")))
         .catch(e=>{
             console.log(e);
+            console.log(`at ${__filename}:${lineNumber()-3}`);
         });
 }

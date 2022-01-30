@@ -14,6 +14,7 @@ ran by node.js
 const logger = require('../util/logger');
 const adminCommandRunner = require('./adminCommandRunner.js');
 const embedContent = require("../util/embed");
+const lineNumber = require("./src/util/LineNumber");
 
 const ignoreChannelCommandRunner = require("./ignoreChannelCommandRunner");
 const ignoreCategoryCommandRunner = require("./ignoreCategoryCommandRunner");
@@ -34,6 +35,7 @@ module.exports = (client)=>{
                     message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `そのコマンドを実行する権限がありません。`))
                         .catch(e=>{
                             console.log(e);
+                            console.log(`at ${__filename}:${lineNumber()-3}`);
                         });
                     break;
                 }
@@ -49,6 +51,7 @@ async function AdminCommandHandler([command, ...args],message,client){
         message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} <サブコマンド>\``))
             .catch(e=>{
                 console.log(e);
+                console.log(`at ${__filename}:${lineNumber()-3}`);
             });
         return;
     }
@@ -94,6 +97,7 @@ async function AdminCommandHandler([command, ...args],message,client){
             message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
 
@@ -116,6 +120,7 @@ async function AdminCommandHandler([command, ...args],message,client){
             message.reply(embedContent.infoWithTitle(`❔ヘルプ`, `下記リンクより確認してみてください。\nhttps://github.com/azisaba/ChatUpdateMonitor/blob/master/README.md`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
 
@@ -123,6 +128,7 @@ async function AdminCommandHandler([command, ...args],message,client){
             message.reply(embedContent.errorWithTitle(`❓コマンドがありません`, `実行したコマンドは登録されていません。`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
       };

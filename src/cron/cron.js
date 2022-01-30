@@ -14,6 +14,7 @@ ran by node.js
 
 const embedContent = require("../util/embed");
 const configManager = require("../config/configManager");
+const lineNumber = require("./src/util/LineNumber");
 
 module.exports = async (client)=>{
     setInterval( async () => {
@@ -37,7 +38,8 @@ module.exports = async (client)=>{
                     ))
                 configManager.setNotifyStatus(key, true);
             }catch(e){ 
-                console.log(e)
+                console.log(e);
+                console.log(`at ${__filename}:${lineNumber()-7}`);
             }
         })
     }, 1000)

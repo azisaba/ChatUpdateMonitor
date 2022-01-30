@@ -13,6 +13,7 @@ ran by node.js
 
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
+const lineNumber = require("./src/util/LineNumber");
 
 module.exports = (client)=>{
     client.on("messageCreate", async message => {
@@ -43,6 +44,7 @@ module.exports = (client)=>{
         ))
         .catch(e=>{
             console.log(e);
+            console.log(`at ${__filename}:${lineNumber()-3}`);
         });
   })
 }

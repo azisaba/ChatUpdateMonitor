@@ -15,6 +15,7 @@ const fs = require('fs');
 const logger =require('../util/logger');
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
+const lineNumber = require("./src/util/LineNumber");
 
 module.exports = async([command, ...args],message) => {
     switch(args[1].toLowerCase()){
@@ -23,6 +24,7 @@ module.exports = async([command, ...args],message) => {
                 message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} admin <add | delete | list> [user]\``))
                     .catch(e=>{
                         console.log(e);
+                        console.log(`at ${__filename}:${lineNumber()-3}`);
                     });
                 return;
             }
@@ -30,6 +32,7 @@ module.exports = async([command, ...args],message) => {
                 message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `ユーザー<@${message.mentions.members.first().id}>は追加済みです。`))
                     .catch(e=>{
                         console.log(e);
+                        console.log(`at ${__filename}:${lineNumber()-3}`);
                     });
                 return;
             }
@@ -38,6 +41,7 @@ module.exports = async([command, ...args],message) => {
             message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `ユーザー<@${message.mentions.members.first().id}>をAdminに追加しました。`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
 
@@ -47,6 +51,7 @@ module.exports = async([command, ...args],message) => {
                 message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} admin <add | delete | list> [user]\``))
                     .catch(e=>{
                         console.log(e);
+                        console.log(`at ${__filename}:${lineNumber()-3}`);
                     });
                 return;
             }
@@ -54,6 +59,7 @@ module.exports = async([command, ...args],message) => {
                 message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `ユーザー<@${message.mentions.members.first().id}>はAdminではないため、削除できませんでした。`))
                     .catch(e=>{
                         console.log(e);
+                        console.log(`at ${__filename}:${lineNumber()-3}`);
                     });
                 return;               
             }
@@ -65,6 +71,7 @@ module.exports = async([command, ...args],message) => {
             message.reply(embedContent.infoWithTitle(`✅コマンド実行成功`, `ユーザー<@${message.mentions.members.first().id}>をAdminから削除しました。`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
 
@@ -75,6 +82,7 @@ module.exports = async([command, ...args],message) => {
             message.reply(embedContent.infoWithTitle(`Adminリスト`, `${ adminLinkList.length>0? adminLinkList.join("\n") : "ユーザーはいません。"}`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
 
@@ -82,6 +90,7 @@ module.exports = async([command, ...args],message) => {
             message.reply(embedContent.errorWithTitle(`❓コマンドがありません`, `実行したコマンドは登録されていません。`))
                 .catch(e=>{
                     console.log(e);
+                    console.log(`at ${__filename}:${lineNumber()-3}`);
                 });
             break;
     };
