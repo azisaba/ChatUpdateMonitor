@@ -14,7 +14,7 @@ ran by node.js
 
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
-const lineNumber = require("./src/util/LineNumber");
+const lineNumber = require("../util/LineNumber");
 
 module.exports = ([command, ...args], message)=>{
     if(args.length<2){

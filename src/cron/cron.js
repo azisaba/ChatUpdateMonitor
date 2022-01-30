@@ -14,7 +14,7 @@ ran by node.js
 
 const embedContent = require("../util/embed");
 const configManager = require("../config/configManager");
-const lineNumber = require("./src/util/LineNumber");
+const lineNumber = require("../util/LineNumber");
 
 module.exports = async (client)=>{
     setInterval( async () => {

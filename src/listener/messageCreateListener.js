@@ -13,6 +13,7 @@ ran by node.js
 
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
+const lineNumber = require("../util/LineNumber");
 
 module.exports = (client)=>{
     client.on("messageCreate", async message => {

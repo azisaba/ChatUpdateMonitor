@@ -15,7 +15,7 @@ const fs = require('fs');
 const logger =require('../util/logger');
 const configManager = require("../config/configManager");
 const embedContent = require("../util/embed");
-const lineNumber = require("./src/util/LineNumber");
+const lineNumber = require("../util/LineNumber");
 
 module.exports = async([command, ...args],message) => {
     switch(args[1].toLowerCase()){

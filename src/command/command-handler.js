@@ -14,7 +14,7 @@ ran by node.js
 const logger = require('../util/logger');
 const adminCommandRunner = require('./adminCommandRunner.js');
 const embedContent = require("../util/embed");
-const lineNumber = require("./src/util/LineNumber");
+const lineNumber = require("../util/LineNumber");
 
 const ignoreChannelCommandRunner = require("./ignoreChannelCommandRunner");
 const ignoreCategoryCommandRunner = require("./ignoreCategoryCommandRunner");
