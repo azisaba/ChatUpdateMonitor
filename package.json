@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "description": "Monitor the frequency of updates for a specific chat",
   "main": "main.js",
-  "repository": "github",
+  "repository": "https://github.com/azisaba/ChatUpdateMonitor",
   "author": "huda0209",
   "license": "MIT",
   "private": false,
