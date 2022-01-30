@@ -30,7 +30,13 @@ module.exports = (client)=>{
         const [command, ...args] = message.content.slice(configManager.getBotData("PREFIX").length).split(' ');   
         switch(command.toLowerCase()){
             case configManager.getBotData("COMMAND") :
-                if(!(message.author.id == message.guild.ownerId || configManager.getGuildtData("Admin").indexOf(message.author.id)>-1)) break;
+                if(!(message.author.id == message.guild.ownerId || configManager.getGuildtData("Admin").indexOf(message.author.id)>-1)){
+                    message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `そのコマンドを実行する権限がありません。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
+                    break;
+                }
                 AdminCommandHandler([command, ...args],message,client);
                 break;
         };
