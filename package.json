@@ -1,6 +1,6 @@
 {
   "name": "chat-update-monitor",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Monitor the frequency of updates for a specific chat",
   "main": "main.js",
   "repository": "https://github.com/azisaba/ChatUpdateMonitor",
