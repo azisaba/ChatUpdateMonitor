@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-29
+2022-1-30
 
 */
 
@@ -18,6 +18,9 @@ const embedContent = require("../util/embed");
 module.exports = ([command, ...args], message)=>{
     if(args.length<2){
         message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} ignoreChannel <add | remove> [チャンネル...]\``))
+            .catch(e=>{
+                console.log(e);
+            });
         return;
     }
     switch(args[1].toLowerCase()){
@@ -25,14 +28,23 @@ module.exports = ([command, ...args], message)=>{
             if(args.length<3){
                 if(configManager.existIgnoreChannel(message.channelId)){
                     message.reply(embedContent.errorWithTitle(`❌追加失敗`, `チャンネル<#${message.channel.id}>は既に除外リストに追加されています。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 if(message.channel.type != "GUILD_TEXT"){
-                    message.reply(embedContent.errorWithTitle(`❌追加失敗`, `<#${message.channel.id}>はチャンネルではありません。`));
+                    message.reply(embedContent.errorWithTitle(`❌追加失敗`, `<#${message.channel.id}>はチャンネルではありません。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 configManager.addIgnoreChannel(message.channelId);
                 message.reply(embedContent.infoWithTitle(`🏷**追加成功`, `チャンネル<#${message.channel.id}>は除外リストに追加されました。`))
+                    .catch(e=>{
+                        console.log(e);
+                    });
             }else {
                 const succeedToAddCh = [];
                 const failedToAddCh = [];
@@ -54,28 +66,42 @@ module.exports = ([command, ...args], message)=>{
                         configManager.addIgnoreChannel(channel.id);
                         succeedToAddCh.push(`<#${channel.id}>`);
                     }catch(e){
-                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
+                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``))
+                            .catch(er=>{
+                                console.log(er);
+                            });
                         console.log(e);
                     };
 
                 })
                 if(succeedToAddCh.length) message.reply(embedContent.infoWithTitle(`🏷追加成功`, `チャンネル${succeedToAddCh.join(" ")}は除外リストに追加されました。`))
-                if(failedToAddCh.length) message.reply(embedContent.errorWithTitle(`❌追加失敗`, `チャンネル${failedToAddCh.join(" ")}は既に除外リストに追加されています。`));
+                                                .catch(e=>{console.log(e)});
+                if(failedToAddCh.length) message.reply(embedContent.errorWithTitle(`❌追加失敗`, `チャンネル${failedToAddCh.join(" ")}は既に除外リストに追加されています。`))
+                                                .catch(e=>{console.log(e)});
             }
             break;
 
         case "remove":
             if(args.length<3){
                 if(!configManager.existIgnoreChannel(message.channelId)){
-                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `チャンネル<#${message.channel.id}>は除外リストにないため、削除できませんでした。`));
+                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `チャンネル<#${message.channel.id}>は除外リストにないため、削除できませんでした。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 if(message.channel.type != "GUILD_TEXT"){
-                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `<#${message.channel.id}>はチャンネルではありません。`));
+                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `<#${message.channel.id}>はチャンネルではありません。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 configManager.removeIgnoreChannel(message.channelId);
-                message.reply(embedContent.infoWithTitle(`🗑削除成功`, `チャンネル<#${message.channel.id}>は除外リストから削除されました。`));
+                message.reply(embedContent.infoWithTitle(`🗑削除成功`, `チャンネル<#${message.channel.id}>は除外リストから削除されました。`))
+                    .catch(e=>{
+                        console.log(e);
+                    });
             }else {
                 const succeedToRemoveCh = [];
                 const failedToRemoveCh = [];
@@ -97,12 +123,17 @@ module.exports = ([command, ...args], message)=>{
                         configManager.removeIgnoreChannel(channel.id);
                         succeedToRemoveCh.push(`<#${channel.id}>`);
                     }catch(e){
-                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
+                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``))
+                            .catch(er=>{
+                                console.log(er);
+                            });
                     };
 
                 })
-                if(succeedToRemoveCh.length) message.reply(embedContent.infoWithTitle(`🗑削除成功`, `チャンネル${succeedToRemoveCh.join(" ")}は除外リストから削除されました。`));
+                if(succeedToRemoveCh.length) message.reply(embedContent.infoWithTitle(`🗑削除成功`, `チャンネル${succeedToRemoveCh.join(" ")}は除外リストから削除されました。`))
+                                                    .catch(e=>{console.log(e)});
                 if(failedToRemoveCh.length) message.reply(embedContent.errorWithTitle(`❌削除失敗`, `チャンネル${failedToRemoveCh.join(" ")}は除外リストにないため、削除できませんでした。`))
+                                                    .catch(e=>{console.log(e)});
 
             }
         break;

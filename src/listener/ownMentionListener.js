@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-29
+2022-1-30
 
 */
 
@@ -40,6 +40,9 @@ module.exports = (client)=>{
         
         message.reply(
             embedContent.infoWithTitle(`💬ChatUpdateMonitor`, `**こいつだれ?**\nチャットの更新を監視して、設定された期間アクションがない場合、通知を行うbotです。\n\n**🎈このカテゴリの状態**\n${configManager.existIgnoreCategory(parentId) ? `このチャンネルのカテゴリは除外リストに追加されています` : configManager.existMonitorCategory(parentId) ? `${configManager.getNotifyStatus(parentId)? `🛑最終アクションから${timeString}経過しています...` : `✅まだ最終アクションから${timeString}経過していません!`}\n前回のアクション : <t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:F><t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:R>` : `👀このチャンネルはまだモニターされていません。`}${configManager.existIgnoreChannel(channelId)? `\n\nこのチャンネルは除外リストに追加されています` : ""}`
-        ));
+        ))
+        .catch(e=>{
+            console.log(e);
+        });
   })
 }

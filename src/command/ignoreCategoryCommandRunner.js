@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-29
+2022-1-30
 
 */
 
@@ -16,22 +16,34 @@ const embedContent = require("../util/embed");
 
 module.exports = ([command, ...args], message)=>{
     if(args.length<2){
-        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} ignoreChannel <add | remove> [チャンネル...]\``));
+        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} ignoreChannel <add | remove> [チャンネル...]\``))
+            .catch(e=>{
+                console.log(e);
+            });
         return;
     }
     switch(args[1].toLowerCase()){
         case "add":
             if(args.length<3){
                 if(configManager.existIgnoreCategory(message.channel.parentId)){
-                    message.reply(embedContent.errorWithTitle(`❌追加失敗`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は既に除外リストに追加されています。`));
+                    message.reply(embedContent.errorWithTitle(`❌追加失敗`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は既に除外リストに追加されています。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 if(channel.type!="GUILD_CATEGORY"){
-                    message.reply(embedContent.errorWithTitle(`❌追加失敗`, `「${message.guild.channels.cache.get(message.channel.parentId).name}」はカテゴリではありません。`));
+                    message.reply(embedContent.errorWithTitle(`❌追加失敗`, `「${message.guild.channels.cache.get(message.channel.parentId).name}」はカテゴリではありません。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 configManager.addIgnoreCategory(message.channel.parentId);
-                message.reply(embedContent.infoWithTitle(`🏷追加成功`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストに追加されました。`));
+                message.reply(embedContent.infoWithTitle(`🏷追加成功`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストに追加されました。`))
+                    .catch(e=>{
+                        console.log(e);
+                    });
             }else {
                 const succeedToAddCategory = [];
                 const failedToAddCategory = [];
@@ -42,7 +54,10 @@ module.exports = ([command, ...args], message)=>{
                     try{
                         const channel = message.guild.channels.cache.get(key);
                         if(channel.type!="GUILD_CATEGORY"){
-                            message.reply(embedContent.errorWithTitle(`❌追加失敗`, `${key}はカテゴリではありません。`));
+                            message.reply(embedContent.errorWithTitle(`❌追加失敗`, `${key}はカテゴリではありません。`))
+                                .catch(e=>{
+                                    console.log(e);
+                                });
                             return;
                         }
                         if(configManager.existIgnoreCategory(channel.id)){
@@ -52,28 +67,42 @@ module.exports = ([command, ...args], message)=>{
                         configManager.addIgnoreCategory(channel.id);
                         succeedToAddCategory.push(channel.name);
                     }catch(e){
-                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
+                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``))
+                            .catch(e=>{
+                                console.log(e);
+                            });
                         console.log(e);
                     };
 
                 })
-                if(succeedToAddCategory.length) message.reply(embedContent.infoWithTitle(`🏷追加成功`, `カテゴリ「${succeedToAddCategory.join(", ")}」は除外リストに追加されました。`));
-                if(failedToAddCategory.length) message.reply(embedContent.errorWithTitle(`❌追加失敗`, `カテゴリ「${failedToAddCategory.join(" ,")}」は既に除外リストに追加されています。`));
+                if(succeedToAddCategory.length) message.reply(embedContent.infoWithTitle(`🏷追加成功`, `カテゴリ「${succeedToAddCategory.join(", ")}」は除外リストに追加されました。`))
+                                                    .catch(e=>{console.log(e)});
+                if(failedToAddCategory.length) message.reply(embedContent.errorWithTitle(`❌追加失敗`, `カテゴリ「${failedToAddCategory.join(" ,")}」は既に除外リストに追加されています。`))
+                                                    .catch(e=>{console.log(e)});
             }
             break;
 
         case "remove":
             if(args.length<3){
                 if(!configManager.existIgnoreCategory(message.channel.parentId)){
-                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストにないため、削除できませんでした。`));
+                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストにないため、削除できませんでした。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 if(channel.type!="GUILD_CATEGORY"){
-                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `「${message.guild.channels.cache.get(message.channel.parentId).name}」はカテゴリではありません。`));
+                    message.reply(embedContent.errorWithTitle(`❌削除失敗`, `「${message.guild.channels.cache.get(message.channel.parentId).name}」はカテゴリではありません。`))
+                        .catch(e=>{
+                            console.log(e);
+                        });
                     return;
                 }
                 configManager.removeIgnoreCategory(message.channel.parentId);
-                message.reply(embedContent.infoWithTitle(`🗑削除成功`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストから削除されました。`));
+                message.reply(embedContent.infoWithTitle(`🗑削除成功`, `カテゴリ「${message.guild.channels.cache.get(message.channel.parentId).name}」は除外リストから削除されました。`))
+                    .catch(e=>{
+                        console.log(e);
+                    });
             }else {
                 const succeedToRemoveCategory = [];
                 const failedToRemoveCategory = [];
@@ -84,7 +113,10 @@ module.exports = ([command, ...args], message)=>{
                     try{
                         const channel = message.guild.channels.cache.get(key);
                         if(channel.type!="GUILD_CATEGORY"){
-                            message.reply(embedContent.errorWithTitle(`❌削除失敗`, `${key}はカテゴリではありません。`));
+                            message.reply(embedContent.errorWithTitle(`❌削除失敗`, `${key}はカテゴリではありません。`))
+                                .catch(e=>{
+                                    console.log(e);
+                                });
                             return;
                         }
                         if(!configManager.existIgnoreCategory(channel.id)){
@@ -94,12 +126,17 @@ module.exports = ([command, ...args], message)=>{
                         configManager.removeIgnoreCategory(channel.id);
                         succeedToRemoveCategory.push(channel.name);
                     }catch(e){
-                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``));
+                        message.reply(embedContent.errorWithTitle(`💥エラー発生`, `エラーが発生しました。再度実行するか、開発者に問い合わせてください。\n\`\`\`${e}\`\`\``))
+                            .catch(e=>{
+                                console.log(e);
+                            });
                     };
 
                 })
-                if(succeedToRemoveCategory.length) message.reply(embedContent.infoWithTitle(`🗑削除成功`, `カテゴリ「${succeedToRemoveCategory.join(", ")}」は除外リストから削除されました。`));
-                if(failedToRemoveCategory.length) message.reply(embedContent.errorWithTitle(`❌削除失敗`, `カテゴリ「${failedToRemoveCategory.join(", ")}」は除外リストにないため、削除できませんでした。`));
+                if(succeedToRemoveCategory.length) message.reply(embedContent.infoWithTitle(`🗑削除成功`, `カテゴリ「${succeedToRemoveCategory.join(", ")}」は除外リストから削除されました。`))
+                                                        .catch(e=>{console.log(e)});
+                if(failedToRemoveCategory.length) message.reply(embedContent.errorWithTitle(`❌削除失敗`, `カテゴリ「${failedToRemoveCategory.join(", ")}」は除外リストにないため、削除できませんでした。`))
+                                                        .catch(e=>{console.log(e)});
             }
             break;
     }

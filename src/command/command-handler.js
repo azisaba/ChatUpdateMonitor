@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-28
+2022-1-30
 
 */
 
@@ -40,7 +40,10 @@ module.exports = (client)=>{
 
 async function AdminCommandHandler([command, ...args],message,client){
     if(args.length==0){
-        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} <サブコマンド>\``));
+        message.reply(embedContent.errorWithTitle(`❌コマンド実行失敗`, `引数が不足しています。\n実行例\`${configManager.getBotData("PREFIX")}${configManager.getBotData("COMMAND")} <サブコマンド>\``))
+            .catch(e=>{
+                console.log(e);
+            });
         return;
     }
     switch(args[0].toLowerCase()){
@@ -82,7 +85,10 @@ async function AdminCommandHandler([command, ...args],message,client){
                 const category = message.guild.channels.cache.get(key);
                 return `${lastUpdateDate.getTime() > (new Date()).getTime() ? "✅" : "‼"} **${category.name}**   -   最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`;
             })
-            message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`));
+            message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`))
+                .catch(e=>{
+                    console.log(e);
+                });
             break;
 
         case "setperiod":
@@ -101,11 +107,17 @@ async function AdminCommandHandler([command, ...args],message,client){
                 
         case "help" :
         case "h":
-            message.reply(embedContent.infoWithTitle(`❔ヘルプ`, `下記リンクより確認してみてください。\nhttps://github.com/azisaba/ChatUpdateMonitor/blob/master/README.md`));
+            message.reply(embedContent.infoWithTitle(`❔ヘルプ`, `下記リンクより確認してみてください。\nhttps://github.com/azisaba/ChatUpdateMonitor/blob/master/README.md`))
+                .catch(e=>{
+                    console.log(e);
+                });
             break;
 
         default:
-            message.reply(embedContent.errorWithTitle(`❓コマンドがありません`, `実行したコマンドは登録されていません。`));
+            message.reply(embedContent.errorWithTitle(`❓コマンドがありません`, `実行したコマンドは登録されていません。`))
+                .catch(e=>{
+                    console.log(e);
+                });
             break;
       };
 }

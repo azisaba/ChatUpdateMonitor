@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-28
+2022-1-30
 
 */
 
@@ -49,6 +49,8 @@ module.exports = ([command, ...args], message)=>{
                         `📋除外リスト\n・**カテゴリ**\n❌登録なし\n\n**・チャンネル**\n${ignoreChannelsLinkList.join("\n")}`
                         :`📋除外リスト\n❌除外リストには何も登録されていないため、表示するものがありません。`;
                     
-    message.reply(embedContent.infoWithTitle(`📚インフォメーション`, [timeString, noticeChannelString, ignoreGuildChannelString].join("\n\n")));
-
+    message.reply(embedContent.infoWithTitle(`📚インフォメーション`, [timeString, noticeChannelString, ignoreGuildChannelString].join("\n\n")))
+        .catch(e=>{
+            console.log(e);
+        });
 }
