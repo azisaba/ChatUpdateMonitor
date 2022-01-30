@@ -130,6 +130,7 @@ module.exports = ([command, ...args], message)=>{
                             .catch(e=>{
                                 console.log(e);
                             });
+                        console.log(e);
                     };
 
                 })

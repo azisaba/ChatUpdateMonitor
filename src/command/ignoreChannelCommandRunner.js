@@ -127,6 +127,7 @@ module.exports = ([command, ...args], message)=>{
                             .catch(er=>{
                                 console.log(er);
                             });
+                        console.log(e);
                     };
 
                 })
