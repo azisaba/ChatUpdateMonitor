@@ -45,7 +45,7 @@ module.exports = ([command, ...args], message)=>{
                     return;
                 }
                 configManager.addIgnoreChannel(message.channelId);
-                message.reply(embedContent.infoWithTitle(`🏷**追加成功`, `チャンネル<#${message.channel.id}>は除外リストに追加されました。`))
+                message.reply(embedContent.infoWithTitle(`🏷追加成功`, `チャンネル<#${message.channel.id}>は除外リストに追加されました。`))
                     .catch(e=>{
                         console.log(e);
                         console.log(`at ${__filename}:${lineNumber()-3}`);
