@@ -17,7 +17,7 @@ const lineNumber = require("../util/LineNumber");
 
 module.exports = (client)=>{
     client.on("messageCreate", async message => {
-        if(!message.mentions.has(client.user)) return;
+        if(message.mentions.everyone || !message.mentions.has(client.user)) return;
 
         const parentId = message.channel.parent.type == "GUILD_CATEGORY" ? 
             message.channel.parent.id : ( message.guild.channels.cache.get(message.channel.parent.id).parent.type == "GUILD_CATEGORY" ? message.guild.channels.cache.get(message.channel.parent.id).parent.id : null );
