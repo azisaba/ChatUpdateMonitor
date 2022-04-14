@@ -40,7 +40,7 @@ module.exports = (client)=>{
           const timeString = `${timeD>0?`${timeD}日` : ""}${timeH>0?`${timeH}時間` : ""}${timeM>0?`${timeM}分` : ""}${timeS>0?`${timeS}秒` : ""}`;
         
         message.reply(
-            embedContent.infoWithTitle(`💬ChatUpdateMonitor`, `**こいつだれ?**\nチャットの更新を監視して、設定された期間アクションがない場合、通知を行うbotです。\n\n**🎈このカテゴリの状態**\n${configManager.existIgnoreCategory(parentId) ? `このチャンネルのカテゴリは除外リストに追加されています` : configManager.existMonitorCategory(parentId) ? `${configManager.getNotifyStatus(parentId)? `🛑最終アクションから${timeString}経過しています...` : `✅まだ最終アクションから${timeString}経過していません!`}\n前回のアクション : <t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:F><t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:R>` : `👀このチャンネルはまだモニターされていません。`}${configManager.existIgnoreChannel(channelId)? `\n\nこのチャンネルは除外リストに追加されています` : ""}`
+            embedContent.infoWithTitle(`💬ChatUpdateMonitor`, `**こいつだれ?**\nチャットの更新を監視して、設定された期間アクションがない場合、通知を行うbotです。\n\n**🎈このカテゴリの状態**\n${configManager.existIgnoreCategory(parentId) ? `このチャンネルのカテゴリは除外リストに追加されています` : configManager.existMonitorCategory(parentId) ? `${configManager.getNotifyStatus(parentId)? `🛑最終アクションから${timeString}経過しています...` : `✅まだ最終アクションから${timeString}経過していません!`}\n前回のアクション : <t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:F> (<t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:R>)` : `👀このチャンネルはまだモニターされていません。`}${configManager.existIgnoreChannel(channelId)? `\n\nこのチャンネルは除外リストに追加されています` : ""}`
         ))
         .catch(e=>{
             console.log(e);
