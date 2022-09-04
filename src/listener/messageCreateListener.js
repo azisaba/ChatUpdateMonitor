@@ -33,7 +33,7 @@ module.exports = (client)=>{
     
     if(configManager.existMonitorCategory(parentId) && configManager.getNotifyStatus(parentId)){
         message.guild.channels.cache.get(configManager.getGuildtData("sendSystemMessageChannelId")).send(
-		      embedContent.infoWithTitle(`📈新たなアクションを検出しました!`, `対象カテゴリ: ${(await client.channels.fetch(parentId)).name}\n前回のアクション : <t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:F><t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:R>`
+		      embedContent.infoWithTitle(`📈新たなアクションを検出しました!`, `対象カテゴリ: ${(await client.channels.fetch(parentId)).name}\n前回のアクション : <t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(parentId)/1000)}:R>`
 		    ))
       		.catch(e=>{
       		    console.log(e);
