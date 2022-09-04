@@ -34,7 +34,7 @@ module.exports = async (client)=>{
             if(configManager.getNotifyStatus(key)) return;
             try{
                 (await client.channels.fetch(configManager.getGuildtData("sendSystemMessageChannelId"))).send(
-                    embedContent.warnWithTitle(`📉最後のアクションから${timeString}経ちました!`, `対象カテゴリ: ${(await client.channels.fetch(key)).name}\n最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F><t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`
+                    embedContent.warnWithTitle(`📉最後のアクションから${timeString}経ちました!`, `対象カテゴリ: ${(await client.channels.fetch(key)).name}\n最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`
                     ))
                 configManager.setNotifyStatus(key, true);
             }catch(e){ 
