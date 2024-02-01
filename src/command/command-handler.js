@@ -92,6 +92,11 @@ async function AdminCommandHandler([command, ...args],message,client){
                 lastUpdateDate.setSeconds(lastUpdateDate.getSeconds()+configManager.getGuildtData("period"));
     
                 const category = message.guild.channels.cache.get(key);
+                if(!category){
+                    configManager.removeCategory(key);
+                    return;
+                }
+
                 return `${lastUpdateDate.getTime() > (new Date()).getTime() ? "✅" : "‼"} **${category.name}**   -   最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`;
             })
             message.reply(embedContent.infoWithTitle(`👀監視カテゴリーリスト`, CategoryList.length>0 ? CategoryList.join("\n") : `❓監視しているカテゴリはありません。`))

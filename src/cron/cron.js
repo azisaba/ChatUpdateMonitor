@@ -5,7 +5,7 @@ ChatUpdateMonitor for discord bot
 
 ran by node.js
 
-2022-1-29
+2023-2-1
 
 */
 
@@ -37,7 +37,11 @@ module.exports = async (client)=>{
                     embedContent.warnWithTitle(`📉最後のアクションから${timeString}経ちました!`, `対象カテゴリ: ${(await client.channels.fetch(key)).name}\n最終アクション : <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:F> <t:${Math.floor(configManager.getCategoryLastUpdate(key)/1000)}:R>`
                     ))
                 configManager.setNotifyStatus(key, true);
-            }catch(e){ 
+            }catch(e){
+                if(e.message === "Unknown Channel"){
+                    configManager.removeCategory(key);
+                    return;
+                }
                 console.log(e);
                 console.log(`at ${__filename}:${lineNumber()-7}`);
             }
